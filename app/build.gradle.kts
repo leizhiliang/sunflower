@@ -1,19 +1,3 @@
-/*
- * Copyright 2018 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 plugins {
   id("com.android.application")
   id("kotlin-android")
@@ -24,10 +8,13 @@ plugins {
 }
 
 android {
+
   compileSdk = libs.versions.compileSdk.get().toInt()
+
   buildFeatures {
     dataBinding = true
   }
+
   defaultConfig {
     applicationId = "com.google.samples.apps.sunflower"
     minSdk = libs.versions.minSdk.get().toInt()
@@ -38,18 +25,24 @@ android {
     vectorDrawables.useSupportLibrary = true
 
     // Consult the README on instructions for setting up Unsplash API key
+    //有关设置 Unsplash API 密钥的说明，请参阅自述文件
     buildConfigField("String", "UNSPLASH_ACCESS_KEY", "\"" + getUnsplashAccess() + "\"")
+
     javaCompileOptions {
       annotationProcessorOptions {
         arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
       }
     }
+
   }
+
   buildTypes {
+
     release {
       isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
     }
+
     create("benchmark") {
       initWith(getByName("release"))
       signingConfig = signingConfigs.getByName("debug")
@@ -59,11 +52,14 @@ android {
         "proguard-rules-benchmark.pro"
       )
     }
+
   }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+
 
   kotlinOptions {
     // work-runtime-ktx 2.1.0 and above now requires Java 8
@@ -73,24 +69,31 @@ android {
     freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.FlowPreview"
   }
+
   buildFeatures {
     compose = true
     dataBinding = true
   }
+
   composeOptions {
     kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
   }
+
   packagingOptions {
     // Multiple dependency bring these files in. Exclude them to enable
     // our test APK to build (has no effect on our AARs)
+    //多个依赖项引入这些文件。排除它们以启用我们的测试 APK 构建（对我们的 AAR 没有影响）
     resources.excludes += "/META-INF/AL2.0"
     resources.excludes += "/META-INF/LGPL2.1"
   }
+
 }
 
 dependencies {
+
   kapt(libs.androidx.room.compiler)
   kapt(libs.hilt.android.compiler)
+
   implementation(libs.androidx.appcompat)
   implementation(libs.androidx.constraintlayout)
   implementation(libs.androidx.core.ktx)
@@ -145,6 +148,9 @@ dependencies {
   androidTestImplementation(libs.accessibility.test.framework)
   androidTestImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.junit)
+
+  implementation("com.tencent:mmkv-static:1.2.10")
+
 }
 
 fun getUnsplashAccess(): String? {
