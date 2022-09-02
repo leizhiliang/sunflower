@@ -149,7 +149,7 @@ dependencies {
   androidTestImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.junit)
 
-  implementation("com.tencent:mmkv-static:1.2.10")
+//  implementation("com.tencent:mmkv-static:1.2.10")
 
 }
 

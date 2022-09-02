@@ -37,8 +37,11 @@ class MaskedCardView @JvmOverloads constructor(
     defStyle: Int = R.attr.materialCardViewStyle
 ) : MaterialCardView(context, attrs, defStyle) {
     @SuppressLint("RestrictedApi")
+
     private val pathProvider = ShapeAppearancePathProvider()
+
     private val path: Path = Path()
+
     private val shapeAppearance: ShapeAppearanceModel = ShapeAppearanceModel.builder(
         context,
         attrs,

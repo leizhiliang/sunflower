@@ -32,6 +32,7 @@ class SeedDatabaseWorker(
         context: Context,
         workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
+
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             val filename = inputData.getString(KEY_FILENAME)

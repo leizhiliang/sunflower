@@ -38,8 +38,11 @@ import kotlin.text.Typography.dagger
 class GalleryFragment : Fragment() {
 
     private val adapter = GalleryAdapter()
+
     private val args: GalleryFragmentArgs by navArgs()
+
     private var searchJob: Job? = null
+
     private val viewModel: GalleryViewModel by viewModels()
 
     override fun onCreateView(
@@ -51,6 +54,7 @@ class GalleryFragment : Fragment() {
         context ?: return binding.root
 
         binding.photoList.adapter = adapter
+
         search(args.plantName)
 
         binding.toolbar.setNavigationOnClickListener { view ->
@@ -61,7 +65,6 @@ class GalleryFragment : Fragment() {
     }
 
     private fun search(query: String) {
-        // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             viewModel.searchPictures(query).collectLatest {
